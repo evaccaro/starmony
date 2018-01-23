@@ -8,11 +8,12 @@ class LoginForm extends React.Component {
     super();
 
     this.state = {
-      name: "",
-      password: "",
       create_name: "",
       create_password: "",
-      create_birthday: ""
+      create_birthday: "",
+      star_sign_id: "",
+      name: "",
+      password: ""
     };
   }
 
@@ -24,24 +25,27 @@ class LoginForm extends React.Component {
 
   handleNewAccount = event => {
     event.preventDefault();
-    this.props.createUser(this.state.create_name, this.state.create_password);
+    this.props.createUser(
+      this.state.create_name,
+      this.state.create_password,
+      this.state.create_birthday,
+      this.props.history
+    );
     this.props.history.push("/horoscopes");
   };
 
   handleLogin = event => {
     event.preventDefault();
-    this.props.login(this.state.name, this.state.password);
+    this.props.login(this.state.name, this.state.password, this.props.history);
     this.props.history.push("/horoscopes");
   };
 
   render() {
-    // console.log(this.state)
+    console.log(this.state);
     return (
       <div style={{ margin: "2%", textAlign: "center" }}>
         <div>
-          <i className="material-icons" style={{ fontSize: "48px" }}>
-            spellcheck
-          </i>
+          <i className="material-icons" style={{ fontSize: "48px" }} />
           <h4>Starmony</h4>
         </div>
         <form onSubmit={this.handleNewAccount}>
@@ -56,14 +60,14 @@ class LoginForm extends React.Component {
           <input
             onChange={this.handleChange}
             name="create_password"
-            type="text"
+            type="password"
             placeholder="Password"
             value={this.state.create_password}
           />{" "}
           <br />
           <input
             onChange={this.handleChange}
-            name="birthday"
+            name="create_birthday"
             type="date"
             value={this.state.create_birthday}
           />{" "}
@@ -87,7 +91,7 @@ class LoginForm extends React.Component {
           <input
             onChange={this.handleChange}
             name="password"
-            type="text"
+            type="password"
             placeholder="Password"
             value={this.state.password}
           />

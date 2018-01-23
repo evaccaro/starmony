@@ -1,19 +1,14 @@
-export default function users_reducer(
-  state = { name: "", horoscopes: [] },
-  action
-) {
+export default function users_reducer(state = { current_user: {} }, action) {
   switch (action.type) {
     case "LOGIN":
       return {
         ...state,
-        name: action.user.name,
-        horoscopes: action.user.horoscopes
+        current_user: action.user
       };
     case "LOGOUT":
       return {
         ...state,
-        name: "",
-        horoscopes: []
+        current_user: {}
       };
     default:
       return state;

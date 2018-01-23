@@ -1,25 +1,24 @@
-export function createUser(name, password) {
+export function createUser(name, password, birthday, history) {
   return dispatch => {
     let options = {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("jwt")
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ name, password })
+      body: JSON.stringify({ name, password, birthday })
     };
-    debugger;
     fetch("http://localhost:3000/users", options)
       .then(res => res.json())
       .then(json => {
         localStorage.setItem("token", json.jwt);
-        dispatch({ type: "LOGIN", user: json });
+        dispatch({ type: "LOGIN", user: json.user });
+        history.push("/horoscopes");
       });
   };
 }
 
-export function login(name, password) {
+export function login(name, password, history) {
   return dispatch => {
     let options = {
       method: "POST",
@@ -33,7 +32,8 @@ export function login(name, password) {
       .then(res => res.json())
       .then(json => {
         localStorage.setItem("token", json.jwt);
-        dispatch({ type: "LOGIN", user: json });
+        dispatch({ type: "LOGIN", user: json.user });
+        history.push("/horoscopes");
       });
   };
 }
@@ -46,7 +46,7 @@ export function getCurrentUser() {
     return fetch("http://localhost:3000/current_user", headers)
       .then(res => res.json())
       .then(json => {
-        dispatch({ type: "LOGIN", user: json });
+        dispatch({ type: "LOGIN", user: json.user });
       });
   };
 }

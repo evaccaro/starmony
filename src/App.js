@@ -1,65 +1,139 @@
 import React, { Component } from "react";
-
-import "./App.css";
-
-import { withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { getCurrentUser } from "./actions/getAuthUser";
+import { getCurrentUser, login } from "./actions/getAuthUser";
 import { getHoroscopes } from "./actions/getHoroscopes";
-import HomePage from "./components/HomePage";
+import { getStarSigns } from "./actions/getStarSigns";
+import Navbar from "./components/Navbar";
 import LoginForm from "./components/LoginForm";
+import HoroscopeList from "./components/HoroscopeList";
+import AllSigns from "./components/AllSigns";
+import ScopeList from "./components/ScopeList";
+import Favorites from "./components/Favorites";
 
 class App extends Component {
-  componentWillMount() {
-    const token = localStorage.getItem("token");
-    if (token) {
+  // componentWillMount() {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     this.props.getCurrentUser();
+  //   }
+  // }
+
+  // componentDidMount() {
+  //   if (this.props.horoscopes.length === 0) {
+  //     this.props.getHoroscopes(this.props.history, 1);
+  //   }
+  // }
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      console.log("here?");
       this.props.getCurrentUser();
     }
-  }
-
-  componentDidMount() {
-    if (this.props.horoscopes.length === 0) {
-      this.props.getHoroscopes(this.props.history);
-    }
+    this.props.getStarSigns();
   }
 
   render() {
-    console.log("in render", this.props);
-
-    if (localStorage.getItem("token")) {
-      //&& this.props.location.pathname === '/'
-      return <HomePage />;
-    } else {
-      return <LoginForm />;
-    }
+    console.log("APP props", this.props);
+    let routes = (
+      <div>
+        <Route
+          exact
+          path="/"
+          render={routerProps => <LoginForm {...routerProps} />}
+        />
+        <Route
+          exact
+          path="/horoscopes"
+          render={routerProps => {
+            if (this.props.user.id) {
+              let starSign = this.props.signs.find(
+                sign => sign.info.id === this.props.user.star_sign_id
+              );
+              return (
+                <HoroscopeList
+                  {...routerProps}
+                  user={this.props.user}
+                  horoscopes={starSign.today}
+                  // starSign={starSign.name}
+                />
+              );
+            } else {
+              return <Redirect to="/" />;
+            }
+          }}
+        />
+        <Route
+          exact
+          path="/favorites"
+          render={routerProps => {
+            if (this.props.user.id) {
+              let starSign = this.props.signs.find(
+                sign => sign.info.id === this.props.user.star_sign_id
+              );
+              return (
+                <Favorites
+                  {...routerProps}
+                  user={this.props.user}
+                  horoscopes={starSign.today}
+                  // starSign={starSign.name}
+                />
+              );
+            } else {
+              return <Redirect to="/" />;
+            }
+          }}
+        />
+        <Route
+          exact
+          path="/allsigns"
+          render={routerProps => (
+            <AllSigns {...routerProps} signs={this.props.signs} />
+          )}
+        />
+        <Route
+          exact
+          path="/signscope/:id"
+          render={routerProps => {
+            let signId = routerProps.match.params.id;
+            let starSign = this.props.signs.find(
+              sign => sign.info.id === parseInt(signId, 10)
+            );
+            console.log(this.props);
+            return (
+              <ScopeList
+                {...routerProps}
+                sign={starSign}
+                horoscopes={starSign.today}
+              />
+            );
+          }}
+        />
+      </div>
+    );
+    return (
+      <div className="App">
+        {this.props.user.id ? <Navbar /> : null}
+        {this.props.signs.length > 0 ? routes : null}
+      </div>
+    );
   }
 }
 
-// const mapStateToProps = (state) => {
-//   // console.log(state)
-//   return {
-//     ...state
-//   }
-// }
-
-// <div className='App'>
-//   <div className="navbar">
-//     <NavBar name={this.props.name}/>
-//   </div>
-//   <Switch>
-//     <Route exact path='/' render={() => <LoginForm />} />
-//     <Route exact path='/add/goal' render={() => <GoalForm />} />
-//     <Route exact path='/goal/:id/add/log' render={form} />
-//     <Route exact path='/goals' render={() => <GoalContainer />} />
-//     <Route exact path='/goal/:id/show' render={() => <ShowGoalContainer />} />
-//   </Switch>
-// </div>
-
 function mapStateToProps(state) {
-  console.log("in map state to props");
-  return { horoscopes: state.horoscopes.content };
+  console.log("in map state to props", state);
+  return {
+    horoscopes: state.horoscopes,
+    user: state.user.current_user,
+    signs: state.signs.signs
+  };
 }
 
 export default withRouter(
-  connect(mapStateToProps, { getCurrentUser, getHoroscopes })(App)
+  connect(mapStateToProps, {
+    getCurrentUser,
+    login,
+    getHoroscopes,
+    getStarSigns
+  })(App)
 );

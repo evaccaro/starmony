@@ -16,31 +16,26 @@ class NavBar extends React.Component {
           style={{ width: "25%", textAlign: "left", display: "inline-block" }}
         >
           <li>
-            <NavLink to="/goals">
-              <i className="material-icons w3-button w3-round-large">
-                bubble_chart
-              </i>Accountable
-            </NavLink>
+            <NavLink to="/allsigns">See All Signs</NavLink>
           </li>
         </div>
         <div
-          style={{ width: "50%", textAlign: "center", display: "inline-block" }}
+          style={{ width: "25%", textAlign: "left", display: "inline-block" }}
         >
           <li>
-            <NavLink to="/add/goal">
-              <i className="material-icons w3-button w3-round-large">add</i>
-            </NavLink>
+            <NavLink to="/horoscopes">See All My Horoscopes</NavLink>
           </li>
         </div>
         <div
-          style={{ width: "15%", textAlign: "center", display: "inline-block" }}
+          style={{ width: "25%", textAlign: "left", display: "inline-block" }}
         >
-          <li>{this.props.name}</li>
+          <li>
+            <NavLink to="/favorites">See My Favorites</NavLink>
+          </li>
         </div>
         <div
           onClick={this.handleLogout}
-          style={{ width: "10%", textAlign: "right", display: "inline-block" }}
-          className="w3-button w3-round-large"
+          style={{ width: "25%", textAlign: "left", display: "inline-block" }}
         >
           <li>Log Out</li>
         </div>
@@ -49,4 +44,3 @@ class NavBar extends React.Component {
   }
 }
 export default withRouter(connect(null, { logout })(NavBar));
-
