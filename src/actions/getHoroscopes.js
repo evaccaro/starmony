@@ -1,6 +1,6 @@
 export function getHoroscopes(history, star_sign_id) {
   return function(dispatch) {
-    console.log("DISPATCH", dispatch);
+    dispatch({ type: "LOADING_HOROSCOPES" });
 
     return fetch(`http://localhost:3000/horoscopes/${star_sign_id}`)
       .then(res => {

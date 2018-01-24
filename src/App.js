@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getCurrentUser, login } from "./actions/getAuthUser";
 import { getHoroscopes } from "./actions/getHoroscopes";
 import { getStarSigns } from "./actions/getStarSigns";
+import { updateFavorites } from "./actions/updateFavorites";
 import Navbar from "./components/Navbar";
 import LoginForm from "./components/LoginForm";
 import HoroscopeList from "./components/HoroscopeList";
@@ -27,7 +28,6 @@ class App extends Component {
   // }
   componentDidMount() {
     if (localStorage.getItem("token")) {
-      console.log("here?");
       this.props.getCurrentUser();
     }
     this.props.getStarSigns();
@@ -46,6 +46,7 @@ class App extends Component {
           exact
           path="/horoscopes"
           render={routerProps => {
+            console.log("render of horoscopes route", this.props.user.id);
             if (this.props.user.id) {
               let starSign = this.props.signs.find(
                 sign => sign.info.id === this.props.user.star_sign_id
@@ -55,7 +56,8 @@ class App extends Component {
                   {...routerProps}
                   user={this.props.user}
                   horoscopes={starSign.today}
-                  // starSign={starSign.name}
+                  updateFavorites={this.props.updateFavorites}
+                  loadingHoroscopes={this.props.loadingHoroscopes}
                 />
               );
             } else {
@@ -114,7 +116,7 @@ class App extends Component {
     return (
       <div className="App">
         {this.props.user.id ? <Navbar /> : null}
-        {this.props.signs.length > 0 ? routes : null}
+        {this.props.signs.length > 0 ? routes : <h1>Loading...</h1>}
       </div>
     );
   }
@@ -125,7 +127,8 @@ function mapStateToProps(state) {
   return {
     horoscopes: state.horoscopes,
     user: state.user.current_user,
-    signs: state.signs.signs
+    signs: state.signs.signs,
+    loadingHoroscopes: state.horoscopes.loading
   };
 }
 
@@ -134,6 +137,7 @@ export default withRouter(
     getCurrentUser,
     login,
     getHoroscopes,
-    getStarSigns
+    getStarSigns,
+    updateFavorites
   })(App)
 );

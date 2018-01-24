@@ -7,11 +7,44 @@ class HoroscopeList extends React.Component {
   //     this.props.getHoroscopes(this.props.history, nextProps.user.star_sign_id);
   //   }
   // }
+
+  state = {
+    chosen: []
+  };
+
+  handleChange = event => {
+    console.log(event.target.name);
+    console.log(this.state.chosen);
+    if (this.state.chosen.includes(event.target.name)) {
+      this.state.chosen.filter(item => item !== event.target.name);
+    } else {
+      this.state.chosen.push(event.target.name);
+    }
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
   horoscopesList = props => {
     // for the first time, or when a user has no favorites, show all
     if (this.props.user) {
       return this.props.horoscopes.map(horoscope => {
-        return <p>{horoscope.content}</p>;
+        return (
+          <div>
+            <p>{horoscope.content}</p>
+            <div>
+              <input
+                type="checkbox"
+                class="star"
+                id="addFavorite"
+                onChange={this.handleChange}
+                name={horoscope.origin}
+                checked={this.state.chosen.includes(horoscope.origin)}
+              />
+              <label for="addFavorite">Add to Favorites</label>
+            </div>
+          </div>
+        );
       });
       // return this.props.horoscopes.filter(horoscope => {
       // this.props.user.favorites.includes(horoscope.origin)
@@ -42,6 +75,9 @@ class HoroscopeList extends React.Component {
         {this.props.horoscopes.length
           ? this.horoscopesList()
           : this.renderMessage()}
+        <button onClick={() => this.props.updateFavorites(this.state.chosen)}>
+          Update Favorites
+        </button>
       </div>
     );
   }

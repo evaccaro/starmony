@@ -12,7 +12,7 @@ class Favorites extends React.Component {
     if (this.props.user && this.props.user.favorites.length > 0) {
       return this.props.horoscopes
         .filter(horoscope => {
-          this.props.user.favorites.includes(horoscope.origin);
+          return this.props.user.favorites.includes(horoscope.origin);
         })
         .map(horoscope => {
           return <p>{horoscope.content}</p>;
