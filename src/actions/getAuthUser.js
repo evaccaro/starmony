@@ -31,9 +31,17 @@ export function login(name, password, history) {
     fetch("http://localhost:3000/login", options)
       .then(res => res.json())
       .then(json => {
-        localStorage.setItem("token", json.jwt);
-        dispatch({ type: "LOGIN", user: json.user });
-        history.push("/horoscopes");
+        if (json.jwt === undefined) {
+          dispatch({ type: "NOTUSER" });
+          history.push("/");
+          alert(
+            "We don't seem to have that username/password. Please try again or create an account."
+          );
+        } else {
+          localStorage.setItem("token", json.jwt);
+          dispatch({ type: "LOGIN", user: json.user });
+          history.push("/horoscopes");
+        }
       });
   };
 }
