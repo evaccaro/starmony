@@ -36,7 +36,7 @@ class App extends Component {
   render() {
     console.log("APP props", this.props);
     let routes = (
-      <div>
+      <div style={{ height: "auto" }}>
         <Route
           exact
           path="/"
@@ -56,6 +56,7 @@ class App extends Component {
                   {...routerProps}
                   user={this.props.user}
                   horoscopes={starSign.today}
+                  signs={this.props.signs}
                   updateFavorites={this.props.updateFavorites}
                   loadingHoroscopes={this.props.loadingHoroscopes}
                 />

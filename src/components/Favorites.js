@@ -1,12 +1,7 @@
 import React from "react";
+import { Card, Image } from "semantic-ui-react";
 
 class Favorites extends React.Component {
-  // componentWillReceiveProps(nextProps) {
-  //   console.log("NEXT", nextProps);
-  //   if (nextProps.user) {
-  //     this.props.getHoroscopes(this.props.history, nextProps.user.star_sign_id);
-  //   }
-  // }
   favoritesList = props => {
     // for the first time, or when a user has no favorites, show all
     if (this.props.user && this.props.user.favorites.length > 0) {
@@ -15,35 +10,56 @@ class Favorites extends React.Component {
           return this.props.user.favorites.includes(horoscope.origin);
         })
         .map(horoscope => {
-          return <p>{horoscope.content}</p>;
+          let place = () => {
+            if (horoscope.origin.startsWith("com")) {
+              return "astrolis";
+            } else {
+              return horoscope.origin;
+            }
+          };
+          return (
+            <Card id="horoscopeCard">
+              <Card.Content>
+                <Card.Header>{place()}.com</Card.Header>
+                <Card.Description>{horoscope.content}</Card.Description>
+              </Card.Content>
+            </Card>
+          );
         });
     } else {
       return (
-        <p>
-          You haven't selected any favorites yet! Add some horoscopes to your
-          favorites via the "See All My Horoscopes" page
-        </p>
+        <div class="alt">
+          <p>
+            You haven't selected any favorites yet! Add some horoscopes to your
+            favorites via the "See All My Horoscopes" page!
+          </p>
+        </div>
       );
     }
   };
 
   renderMessage() {
     return (
-      <p>
-        We haven't yet collected horoscopes for today. Try again sometime later.
-      </p>
+      <div class="alt">
+        <p>
+          We haven't yet collected horoscopes for today. Try again sometime
+          later.
+        </p>
+      </div>
     );
   }
 
   render() {
     console.log("PROPS", this.props);
     return (
-      <div id="fullList">
-        <h3>Welcome back, {this.props.user.name}</h3>
+      <div id="fullList" class="stars" style={{ height: "100vh" }}>
+        <h3>Horoscopes from {this.props.user.name}'s Favorite Astrologers</h3>
         {/* <h3>Here are your favorite {this.props.starSign.name} horoscopes</h3> */}
-        {this.props.horoscopes.length
-          ? this.favoritesList()
-          : this.renderMessage()}
+        {this.props.horoscopes.length ? (
+          <Card.Group itemsPerRow={1}>{this.favoritesList()}</Card.Group>
+        ) : (
+          this.renderMessage()
+        )}
       </div>
     );
   }

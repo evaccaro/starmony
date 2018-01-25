@@ -45,7 +45,7 @@ class LoginForm extends React.Component {
     console.log(this.state);
     return (
       <div
-        id="login"
+        class="stars"
         style={{
           height: window.innerHeight,
           width: window.innerWidth,

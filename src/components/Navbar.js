@@ -12,24 +12,29 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <Sticky id="nav">
-        <Menu size="huge">
-          <NavLink className="item" to="/allsigns">
-            See All Signs
-          </NavLink>
-          <NavLink className="item" to="/horoscopes">
-            See All My Horoscopes
-          </NavLink>
-          <NavLink className="item" to="/favorites">
-            See My Favorites
-          </NavLink>
-          <Menu.Item position="right">
-            <Button color="grey" onClick={this.handleLogout}>
-              Log Out
-            </Button>
-          </Menu.Item>
-        </Menu>
-      </Sticky>
+      <Menu
+        style={{ backgroundColor: "DarkSlateBlue" }}
+        fixed="top"
+        id="top-menu"
+        size="huge"
+      >
+        <NavLink className="item" to="/allsigns">
+          See All Signs
+        </NavLink>
+        <NavLink className="item" to="/horoscopes">
+          See All My Horoscopes
+        </NavLink>
+        <NavLink className="item" to="/favorites">
+          See My Favorites
+        </NavLink>
+        <h1>Starmony</h1>
+        <Menu.Item position="right">
+          <Button color="grey" onClick={this.handleLogout}>
+            Log Out
+          </Button>
+        </Menu.Item>
+      </Menu>
+
       // {/* <ul>
       //   <div
       //     style={{ width: "25%", textAlign: "left", display: "inline-block" }}

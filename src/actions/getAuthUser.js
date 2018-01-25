@@ -1,3 +1,5 @@
+import swal from "sweetalert";
+
 export function createUser(name, password, birthday, history) {
   return dispatch => {
     let options = {
@@ -34,9 +36,12 @@ export function login(name, password, history) {
         if (json.jwt === undefined) {
           dispatch({ type: "NOTUSER" });
           history.push("/");
-          alert(
-            "We don't seem to have that username/password. Please try again or create an account."
-          );
+          swal({
+            title: "Oops!",
+            text:
+              "We don't seem to have that username/password. Please try again or create an account.",
+            dangerMode: true
+          });
         } else {
           localStorage.setItem("token", json.jwt);
           dispatch({ type: "LOGIN", user: json.user });

@@ -14,16 +14,22 @@ class HoroscopeList extends React.Component {
     chosen: this.props.user.favorites
   };
 
-  time = moment().format("LT");
+  time = new Date().getHours();
 
   greeting = () => {
-    if (this.time < "12:00pm") {
+    if (this.time < 12) {
       return "Good morning, ";
-    } else if (this.time >= "12:00pm" && this.time < "5:00pm") {
+    } else if (this.time >= 12 && this.time < 17) {
       return "Good afternoon, ";
-    } else if (this.time >= "5:00pm") {
+    } else if (this.time >= 17) {
       return "Good evening, ";
     }
+  };
+
+  user_sign = props => {
+    return this.props.signs.filter(
+      sign => sign.info.id === this.props.user.star_sign_id
+    );
   };
 
   handleChange = event => {
@@ -46,17 +52,17 @@ class HoroscopeList extends React.Component {
       return this.props.horoscopes.map(horoscope => {
         let place = () => {
           if (horoscope.origin.startsWith("com")) {
-            return "atrolis";
+            return "astrolis";
           } else {
             return horoscope.origin;
           }
         };
 
         return (
-          <Card>
+          <Card id="horoscopeCard">
             <Card.Content>
               <Card.Header>{place()}.com</Card.Header>
-              <Card.Description>{horoscope.content}</Card.Description>
+              <Card.Description id="test">{horoscope.content}</Card.Description>
             </Card.Content>
             <Card.Content extra>
               {/* <Checkbox
@@ -126,20 +132,24 @@ class HoroscopeList extends React.Component {
 
   renderMessage() {
     return (
-      <p>
-        We haven't yet collected horoscopes for today. Try again sometime later.
-      </p>
+      <div class="alt">
+        <p>
+          We haven't yet collected horoscopes for today. Try again sometime
+          later.
+        </p>
+      </div>
     );
   }
 
   render() {
     console.log("PROPS", this.props);
-    console.log("time", moment().format("LT") > "12:00pm");
+    console.log("time", this.time < "12:00pm");
+
     return (
-      <div id="fullList">
+      <div id="fullList" class="stars">
         <h3>
-          {this.greeting()} {this.props.user.name}. Browse your horoscopes for
-          today.
+          {this.greeting()} {this.props.user.name}. Browse today's{" "}
+          {this.user_sign()[0].info.sign} horoscopes.
         </h3>
         {/* <h3>Here are your favorite {this.props.starSign.name} horoscopes</h3> */}
         {this.props.horoscopes.length ? (
@@ -147,6 +157,8 @@ class HoroscopeList extends React.Component {
         ) : (
           this.renderMessage()
         )}
+        <br />
+        <br />
         <Button
           color="grey"
           onClick={() => this.props.updateFavorites(this.state.chosen)}
