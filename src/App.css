@@ -32,17 +32,38 @@
 }
 .star {
   visibility: hidden;
-  font-size: 30px;
+  height: 30px;
   cursor: pointer;
+  color: rgba(0, 0, 0, 0.1);
 }
 .star:before {
   content: "\2605";
   position: absolute;
   visibility: visible;
+  color: rgba(0, 0, 0, 0.1);
 }
 .star:checked:before {
   content: "\2606";
   position: absolute;
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.blackstar {
+  visibility: hidden;
+  height: 30px;
+  cursor: pointer;
+  color: black;
+}
+.blackstar:before {
+  content: "\2605";
+  position: absolute;
+  visibility: visible;
+  color: black;
+}
+.blackstar:checked:before {
+  content: "\2606";
+  position: absolute;
+  color: black;
 }
 
 #login {
@@ -55,4 +76,15 @@ h4 {
   font-family: "Aladin", cursive;
   color: white;
   font-size: 90px;
+}
+#fullList {
+  padding-top: 10px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+}
+
+#nav {
+  position: relative;
+  z-index: 4;
 }

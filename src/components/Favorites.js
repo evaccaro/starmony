@@ -18,7 +18,12 @@ class Favorites extends React.Component {
           return <p>{horoscope.content}</p>;
         });
     } else {
-      return <p>You haven't selected any favorites yet!</p>;
+      return (
+        <p>
+          You haven't selected any favorites yet! Add some horoscopes to your
+          favorites via the "See All My Horoscopes" page
+        </p>
+      );
     }
   };
 
@@ -33,7 +38,7 @@ class Favorites extends React.Component {
   render() {
     console.log("PROPS", this.props);
     return (
-      <div>
+      <div id="fullList">
         <h3>Welcome back, {this.props.user.name}</h3>
         {/* <h3>Here are your favorite {this.props.starSign.name} horoscopes</h3> */}
         {this.props.horoscopes.length

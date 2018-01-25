@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../actions/getAuthUser";
-import { Button, Menu } from "semantic-ui-react";
+import { Button, Menu, Sticky } from "semantic-ui-react";
 
 class NavBar extends React.Component {
   handleLogout = event => {
@@ -12,22 +12,24 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <Menu size="huge">
-        <NavLink className="item" to="/allsigns">
-          See All Signs
-        </NavLink>
-        <NavLink className="item" to="/horoscopes">
-          See All My Horoscopes
-        </NavLink>
-        <NavLink className="item" to="/favorites">
-          See My Favorites
-        </NavLink>
-        <Menu.Item position="right">
-          <Button color="grey" onClick={this.handleLogout}>
-            Log Out
-          </Button>
-        </Menu.Item>
-      </Menu>
+      <Sticky id="nav">
+        <Menu size="huge">
+          <NavLink className="item" to="/allsigns">
+            See All Signs
+          </NavLink>
+          <NavLink className="item" to="/horoscopes">
+            See All My Horoscopes
+          </NavLink>
+          <NavLink className="item" to="/favorites">
+            See My Favorites
+          </NavLink>
+          <Menu.Item position="right">
+            <Button color="grey" onClick={this.handleLogout}>
+              Log Out
+            </Button>
+          </Menu.Item>
+        </Menu>
+      </Sticky>
       // {/* <ul>
       //   <div
       //     style={{ width: "25%", textAlign: "left", display: "inline-block" }}
