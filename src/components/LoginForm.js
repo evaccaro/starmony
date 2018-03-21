@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { login, createUser } from "../actions/getAuthUser";
-import { Button, Input } from "semantic-ui-react";
+import { Button, Input, Image } from "semantic-ui-react";
 
 class LoginForm extends React.Component {
   constructor() {
@@ -56,6 +56,7 @@ class LoginForm extends React.Component {
       >
         <div style={{ textAlign: "center" }}>
           <div id="starmony">
+            <Image id="coverball" src="/crystalball.png" />
             <h4>Starmony</h4>
           </div>
           <br />
@@ -70,6 +71,8 @@ class LoginForm extends React.Component {
               value={this.state.create_name}
               required
             /> */}
+            <br />
+            <br />
             <Input
               size="large"
               placeholder="Name"
@@ -117,7 +120,7 @@ class LoginForm extends React.Component {
             <br />
             <Button color="grey">Create an Account</Button>
           </form>
-          <h4>or</h4>
+          <h2>or</h2>
           <form onSubmit={this.handleLogin}>
             {/* <input
               onChange={this.handleChange}

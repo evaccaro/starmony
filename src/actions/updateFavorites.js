@@ -1,4 +1,4 @@
-export function updateFavorites(favorites) {
+export function updateFavorites(favorites, history) {
   return dispatch => {
     let options = {
       method: "PATCH",
@@ -13,6 +13,7 @@ export function updateFavorites(favorites) {
       .then(res => res.json())
       .then(json => {
         dispatch({ type: "UPDATE_FAVORITES", favorites: json.favorites });
+        history.push("/favorites");
       });
   };
 }

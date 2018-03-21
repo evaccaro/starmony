@@ -12,7 +12,7 @@ class Favorites extends React.Component {
         .map(horoscope => {
           let place = () => {
             if (horoscope.origin.startsWith("com")) {
-              return "astrolis";
+              return "astrology-answers";
             } else {
               return horoscope.origin;
             }
@@ -49,10 +49,20 @@ class Favorites extends React.Component {
     );
   }
 
+  back() {
+    if (this.props.user.favorites.length <= 3) {
+      return { height: "100vh" };
+    }
+  }
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     console.log("PROPS", this.props);
     return (
-      <div id="fullList" class="stars" style={{ height: "100vh" }}>
+      <div id="fullList" class="starsFave" style={this.back()}>
         <h3>Horoscopes from {this.props.user.name}'s Favorite Astrologers</h3>
         {/* <h3>Here are your favorite {this.props.starSign.name} horoscopes</h3> */}
         {this.props.horoscopes.length ? (

@@ -52,7 +52,7 @@ class HoroscopeList extends React.Component {
       return this.props.horoscopes.map(horoscope => {
         let place = () => {
           if (horoscope.origin.startsWith("com")) {
-            return "astrolis";
+            return "astrology-answers";
           } else {
             return horoscope.origin;
           }
@@ -161,7 +161,9 @@ class HoroscopeList extends React.Component {
         <br />
         <Button
           color="grey"
-          onClick={() => this.props.updateFavorites(this.state.chosen)}
+          onClick={() =>
+            this.props.updateFavorites(this.state.chosen, this.props.history)
+          }
         >
           Update Favorites
         </Button>

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../actions/getAuthUser";
-import { Button, Menu, Sticky } from "semantic-ui-react";
+import { Button, Menu, Sticky, Image } from "semantic-ui-react";
 
 class NavBar extends React.Component {
   handleLogout = event => {
@@ -28,6 +28,7 @@ class NavBar extends React.Component {
           See My Favorites
         </NavLink>
         <h1>Starmony</h1>
+        <Image id="crystalicon" src="/crystalball.png" />
         <Menu.Item position="right">
           <Button color="grey" onClick={this.handleLogout}>
             Log Out
